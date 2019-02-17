@@ -174,7 +174,8 @@ def crossVal_algo(k, algo, params, X, y, splittype, splitfrac, verbose=False):  
     if(splittype=='rand'):
         rs2 = model_selection.ShuffleSplit(len(X), n_iter=k, test_size=splitfrac)
     elif(splittype=='timed'):
-        rs2 = model_selection.KFold(n=len(X), n_folds=k)
+        rs2 = model_selection.KFold(n_splits=k)
+    rs2.get_n_splits(X)
     max, max_params = 0, {}
     par = []
     for param in params.keys():
@@ -183,7 +184,7 @@ def crossVal_algo(k, algo, params, X, y, splittype, splitfrac, verbose=False):  
         if(verbose):
             print "val=", p
         score = 0.0
-        for train, test in rs2:
+        for train, test in rs2.split(X):
             X_train, y_train, X_test, y_test = X[train], y[train], X[test], y[test]
             X_train = np.array([item for sublist in X_train for item in sublist])
             y_train = np.array([item for sublist in y_train for item in sublist])

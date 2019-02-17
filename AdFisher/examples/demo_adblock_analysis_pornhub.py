@@ -5,6 +5,7 @@ import json
 from collections import namedtuple
 import csv
 import operator
+import csv
 
 def load_ads_from_json(log_name,session):
     '''
@@ -333,6 +334,17 @@ def main(log_file):
         data[session_id] = [unit_id, treatment_id,ad_lines]
 
     all_data = combine_sessions(data)
+
+    urls = set()
+    for _, ad in all_data:
+        urls.add(ad.url)
+    with open('urls.txt', 'wb') as csvfile:
+        fieldnames = ['url']
+        urlwriter = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        urlwriter.writeheader()
+        for url in urls:
+            urlwriter.writerow({'url': url})
+
 
     print("### Simple Ad Data ###")
     simple_print(data)

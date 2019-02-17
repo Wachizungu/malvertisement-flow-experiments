@@ -3,7 +3,7 @@ import numpy as np
 from datetime import datetime                           # for getting times for computation
 
 ## CV
-from sklearn import cross_validation
+from sklearn import model_selection
 from itertools import product
 
 ## Classification
@@ -17,7 +17,7 @@ from sklearn.svm import LinearSVC
 
 def split_data(X, y, splittype='timed', splitfrac=0.1, verbose=False):  
     if(splittype == 'rand'):
-        rs1 = cross_validation.ShuffleSplit(len(X), n_iter=1, test_size=splitfrac)
+        rs1 = model_selection.ShuffleSplit(len(X), n_iter=1, test_size=splitfrac)
         for train, test in rs1:
             if(verbose):
                 print "Training blocks:", train 
@@ -172,9 +172,9 @@ def print_top_features(X, y, feat, treatnames, clf, feat_choice, nfeat=5, blocke
 
 def crossVal_algo(k, algo, params, X, y, splittype, splitfrac, verbose=False):              # performs cross_validation
     if(splittype=='rand'):
-        rs2 = cross_validation.ShuffleSplit(len(X), n_iter=k, test_size=splitfrac)
+        rs2 = model_selection.ShuffleSplit(len(X), n_iter=k, test_size=splitfrac)
     elif(splittype=='timed'):
-        rs2 = cross_validation.KFold(n=len(X), n_folds=k)
+        rs2 = model_selection.KFold(n=len(X), n_folds=k)
     max, max_params = 0, {}
     par = []
     for param in params.keys():

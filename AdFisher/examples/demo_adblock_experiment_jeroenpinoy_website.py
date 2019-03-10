@@ -1,4 +1,4 @@
-from core import adfisher # adfisher wrapper function
+from core import adfisher  # adfisher wrapper function
 import web.pre_experiment.alexa  # collecting top sites from alexa
 import web.adblock_ads  # collecting ads
 
@@ -30,7 +30,7 @@ def exp_treatment(unit):
 # checks all the sites that adfisher could previously collect on
 # (~45 minutes)
 def measurement(unit):
-    sites = ["https://pornhub.com"]
+    sites = ["https://jeroenpinoy.website/index.php/2019/02/24/test-malvertisement-detection-flow/"]
 
     for site in sites:
         unit.collect_ads(site, reloads=2, delay=5)

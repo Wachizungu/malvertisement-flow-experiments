@@ -4,12 +4,13 @@ import driver.driver as driver
 import analysis.permutation_test
 import analysis.statistics
 import analysis.ml
-import sys,os
+import sys, os
+
 
 def do_experiment(make_unit, treatments, measurement, end_unit,
-          load_results, test_stat, ml_analysis, 
-          num_blocks=1, num_units=2, timeout=2000,
-          log_file="log.txt", exp_flag=True, analysis_flag=True, treatment_names=[]): 
+                  load_results, test_stat, ml_analysis,
+                  num_blocks=1, num_units=2, timeout=2000,
+                  log_file="log.txt", exp_flag=True, analysis_flag=True, treatment_names=[]):
     """
     Run an experiment.
 
@@ -41,22 +42,26 @@ def do_experiment(make_unit, treatments, measurement, end_unit,
     After doing this for every block, 
         it uses test_stat to run a permutation test on the results using that as the test statistic.
     """
+
     def exper_body(unit_id, treatment_id):
         class Test(unittest.TestCase):
             def setUp(self):
                 self.unit = make_unit(unit_id, treatment_id)
-            def runTest(self):  
-                self.unit.log('event', 'progress-marker', "training-start")         
+
+            def runTest(self):
+                self.unit.log('event', 'progress-marker', "training-start")
                 treatments[treatment_id](self.unit)
-                self.unit.log('event', 'progress-marker', "training-end")   
-                            
-                self.unit.wait_for_others() 
-                    
-                self.unit.log('event', 'progress-marker', "measurement-start")      
+                self.unit.log('event', 'progress-marker', "training-end")
+
+                self.unit.wait_for_others()
+
+                self.unit.log('event', 'progress-marker', "measurement-start")
                 measurement(self.unit)
-                self.unit.log('event', 'progress-marker', "measurement-end") 
+                self.unit.log('event', 'progress-marker', "measurement-end")
+
             def tearDown(self):
                 end_unit(self.unit)
+
         test = Test()
         suite = unittest.TestSuite()
         suite.addTest(test)
@@ -64,43 +69,41 @@ def do_experiment(make_unit, treatments, measurement, end_unit,
 
     ntreat = len(treatments)
     if len(treatment_names) != ntreat:
-        treatment_names = map(lambda i: str(i), range(0,ntreat))
-    
-    if(exp_flag):
+        treatment_names = map(lambda i: str(i), range(0, ntreat))
+
+    if exp_flag:
         driver.run_experiment(exper_body,
-                         num_blocks, num_units, timeout,
-                         log_file, treatment_names)
-    
-    if(analysis_flag):
+                              num_blocks, num_units, timeout,
+                              log_file, treatment_names)
+
+    if analysis_flag:
         result = load_results()
-        if(len(result)==3):
+        if len(result) == 3:
             X, y, features = result[0], result[1], result[2]
-        elif(len(result)==2):
+        elif len(result) == 2:
             X, y = result[0], result[1]
         else:
-            raw_input("Could not resolve return result from load_results(). Press Enter to exit")
+            input("Could not resolve return result from load_results(). Press Enter to exit")
             sys.exit(0)
-        analysis.statistics.print_counts(X,y)
-        if(ml_analysis):
-            classifier, observed_values, unit_assignments = analysis.ml.train_and_test(X, y, 
-                                                   splittype='timed', 
-                                                   splitfrac=0.2, 
-                                                   nfolds=10,
-                                                   verbose=True)
+        analysis.statistics.print_counts(X, y)
+        if ml_analysis:
+            classifier, observed_values, unit_assignments = analysis.ml.train_and_test(X, y,
+                                                                                       splittype='timed',
+                                                                                       splitfrac=0.2,
+                                                                                       nfolds=10,
+                                                                                       verbose=True)
             # use classifier and features here to get top ads
-#             print "Extracting top features\n"
-#             topk0, topk1 = analysis.ml.print_only_top_features(classifier, features, treatment_names, feat_choice="ads")
-#             analysis.statistics.print_frequencies(X, y, features, topk0, topk1)
-            
-            print "Running permutation test\n"
-            p_value = analysis.permutation_test.blocked_sampled_test(observed_values, unit_assignments, 
-                                                                analysis.statistics.correctly_classified)
+            #             print "Extracting top features\n"
+            #             topk0, topk1 = analysis.ml.print_only_top_features(classifier, features, treatment_names, feat_choice="ads")
+            #             analysis.statistics.print_frequencies(X, y, features, topk0, topk1)
+
+            print("Running permutation test\n")
+            p_value = analysis.permutation_test.blocked_sampled_test(observed_values, unit_assignments,
+                                                                     analysis.statistics.correctly_classified)
 
         else:
             observed_values, unit_assignments = X, y
             # use test_stat to get the keyword analysis
-            print "Running permutation test\n"
+            print("Running permutation test\n")
             p_value = analysis.permutation_test.blocked_sampled_test(observed_values, unit_assignments, test_stat)
         print "p-value: ", p_value
-
-

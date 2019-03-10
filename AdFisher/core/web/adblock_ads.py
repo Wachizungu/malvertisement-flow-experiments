@@ -10,15 +10,11 @@ import browser_unit
 
 # imports to use selenium
 import selenium
-from selenium import webdriver
-from xvfbwrapper import Xvfb  # artificial display for headless experiments
 
 # imports to parse easylist
 from adblockparser import AdblockRules
 from adblockparser import AdblockRule
 
-# imports to parse url
-from urlparse import urlparse, parse_qs
 
 # imports to log ad data
 import json
@@ -60,7 +56,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         if tmp_version > cur_version and cur_version != -1:
             os.remove(self.EASYLIST)
             shutil.move(tmp_easylist, self.EASYLIST)
-            print ("Updated easylist from {} to {}".format(cur_version, tmp_version))
+            print("Updated easylist from {} to {}".format(cur_version, tmp_version))
         elif cur_version == -1:
             shutil.move(tmp_easylist, self.EASYLIST)
             print("New easylist {}".format(tmp_version))
@@ -69,9 +65,9 @@ class AdBlockUnit(browser_unit.BrowserUnit):
             print("Easylist already up to date at: {}".format(tmp_version))
 
     def _load_easylist(self):
+
         '''
-        Reads in easylist from a file and parses it into lines to be passed to
-        abblockparser.
+        Reads in easylist from a file and parses it into lines to be passed to abblockparser.
         '''
         with open(self.EASYLIST) as f:
             lines = f.read().splitlines()
@@ -176,7 +172,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         These are considered "text" ads.
         '''
         driver = self.driver
-        ### xpath could be less performant than other find_* methods
+        #xpath could be less performant than other find_* methods
         # common tags: <a>,<link>
         elements = driver.find_elements_by_xpath("//*[@href]")
         count = self.check_elements(elements, "href", self.all_options)
@@ -189,7 +185,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         tags
         '''
         driver = self.driver
-        ### xpath could be less performant than other find_* methods
+        # xpath could be less performant than other find_* methods
         # common tags: <img>, <iframe>, <frame>, <embed>, <script>
         elements = driver.find_elements_by_xpath("//*[@src]")
         count = self.check_elements(elements, "src", self.all_options)
@@ -254,7 +250,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
             return True
         except selenium.common.exceptions.TimeoutException as e:
             print("Timeout Visiting: {} : {}".format(url, self.session))
-            print e
+            print(e)
             return False
 
     def collect_ads(self, url, reloads=1, delay=0, file_name=None):
@@ -263,7 +259,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         Result: 
         '''
         print("collecting ads on: {}".format(url))
-        if file_name == None:
+        if file_name is None:
             file_name = self.log_file
 
         # number of reloads on site to capture all ads

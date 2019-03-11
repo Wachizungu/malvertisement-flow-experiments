@@ -1,11 +1,10 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
-from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
+import time
+import sys
+from datetime import datetime
 import browser_unit
 from selenium.common.exceptions import NoSuchElementException
 import random
+from html.parser import HTMLParser
 
 MALE_EMAIL = 'benkevinjohns@gmail.com'
 MALE_PASSWORD = '65382$wtcv'
@@ -26,12 +25,11 @@ def clean(s):
 
 with open('site_files/linkedin_login_credentials_female.txt') as f:
     FEMALE_CREDENTIALS = map(clean, f.readlines())
-    print FEMALE_CREDENTIALS
+    print(FEMALE_CREDENTIALS)
 
 with open('site_files/linkedin_login_credentials_male.txt') as f:
     MALE_CREDENTIALS = map(clean, f.readlines())
-
-from HTMLParser import HTMLParser
+    print(MALE_CREDENTIALS)
 
 
 class MLStripper(HTMLParser):
@@ -126,7 +124,8 @@ class LinkedInAdsUnit(browser_unit.BrowserUnit):
             try:
                 company_title = li.find_element_by_css_selector('div.description bdi a').get_attribute('innerHTML')
                 location = li.find_element_by_css_selector('dl.demographic dd.separator bdi').get_attribute('innerHTML')
-                ad = strip_tags(curr_time + SEPARATOR + company_title + SEPARATOR + 'URL' + SEPARATOR + location).encode(
+                ad = strip_tags(
+                    curr_time + SEPARATOR + company_title + SEPARATOR + 'URL' + SEPARATOR + location).encode(
                     "utf8")
                 self.log('measurement', 'ad', ad)
             except NoSuchElementException:

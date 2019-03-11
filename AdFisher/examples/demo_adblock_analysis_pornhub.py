@@ -241,7 +241,7 @@ def save_matrix_csv(data, groups, outfile):
         # write headers
         headers = ["g_id", "link_text", "urls", "# link", "# url", "# obs"] + cols
         writer.writerow(headers)
-        for g_id, g in groups.iteritems():
+        for g_id, g in groups.items():
             character, obs = g
             obs_data = group_observed(obs, cols)
             # skip non link text
@@ -257,7 +257,7 @@ def group_observed(obs, cols):
 
 def get_all_observation_points(groups):
     observ = set()
-    for g_id, g in groups.iteritems():
+    for g_id, g in groups.items():
         character, obs = g
         for o in obs:
             observ.add(o)
@@ -276,7 +276,7 @@ def get_non_represented_urls(data, groups):
     Return any ad resources not already represented (long tail)
     '''
 
-    for group_id, group in groups.iteritems():
+    for group_id, group in groups.items():
         character, observ = group
         urls = character[1]
         for url in urls:

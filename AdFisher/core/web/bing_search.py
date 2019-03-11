@@ -1,17 +1,14 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
+import time
 from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
 import browser_unit
+from html.parser import HTMLParser
 
 # Bing search constants
 
 INPUT_ID = "sb_form_q"
 
-# strip html
 
-from HTMLParser import HTMLParser
+# strip html
 
 
 class MLStripper(HTMLParser):

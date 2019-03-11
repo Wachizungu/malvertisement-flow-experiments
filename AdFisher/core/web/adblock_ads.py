@@ -1,9 +1,9 @@
 import logging
-import datetime
 import os
 import urllib
 import shutil
 import time
+import contextlib
 
 # base class we inherit from and extend
 import browser_unit
@@ -14,7 +14,6 @@ import selenium
 # imports to parse easylist
 from adblockparser import AdblockRules
 from adblockparser import AdblockRule
-
 
 # imports to log ad data
 import json
@@ -49,11 +48,18 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         cur_version = self._easylist_version()
 
         # download latest easylist from the Internet
-        urllib.urlretrieve(self.EASYLIST_URL, tmp_easylist)
+        with open(tmp_easylist, 'wb') as out_file:
+            with contextlib.closing(urllib.request.urlopen(self.EASYLIST_URL)) as fp:
+                block_size = 1024 * 8
+                while True:
+                    block = fp.read(block_size)
+                    if not block:
+                        break
+                    out_file.write(block)
         tmp_version = self._easylist_version(path=tmp_easylist)
 
         # if necessary update
-        if tmp_version > cur_version and cur_version != -1:
+        if cur_version != -1 and tmp_version > cur_version:
             os.remove(self.EASYLIST)
             shutil.move(tmp_easylist, self.EASYLIST)
             print("Updated easylist from {} to {}".format(cur_version, tmp_version))
@@ -76,18 +82,16 @@ class AdBlockUnit(browser_unit.BrowserUnit):
 
     def __init__(self, browser="firefox", log_file="log.txt", unit_id=0, treatment_id=0, headless=False, proxy=None,
                  rules=None):
-
-        # if easylist is not passed in, then consider this is a bare unit that 
+        # if easylist is not passed in, then consider this is a bare unit that
         # that should only be used to fetch easylist and then parse into
         # adblockplus rules for use with adblockparser.
-        if rules == None:
+        if rules is None:
             self._fetch_easylist()
             self.filterlist = self._load_easylist()
             self.rules = AdblockRules(self.filterlist)
         else:
             logging.basicConfig(filename="adb_" + log_file, level=logging.INFO)
             self.logger = logging.getLogger(__name__)
-
             # call parent constructor
             browser_unit.BrowserUnit.__init__(self, browser, log_file, unit_id, treatment_id, headless, proxy=proxy)
 
@@ -150,7 +154,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         for e in elements:
             try:
                 url = e.get_attribute(source)
-                if url != None:
+                if url is not None:
                     self.logger.debug("Checking:{}:{}".format(source, url))
                     # check if we have evaluated this ad before
                     if url not in self.memo:
@@ -172,7 +176,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         These are considered "text" ads.
         '''
         driver = self.driver
-        #xpath could be less performant than other find_* methods
+        # xpath could be less performant than other find_* methods
         # common tags: <a>,<link>
         elements = driver.find_elements_by_xpath("//*[@href]")
         count = self.check_elements(elements, "href", self.all_options)

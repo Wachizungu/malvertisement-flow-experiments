@@ -1,12 +1,9 @@
-import time, re  # time.sleep, re.split
+import time
 import sys  # some prints
 from datetime import datetime  # for tagging log with datetime
-# import browser_unit
-import google_search  # interacting with Google Search
+from html.parser import HTMLParser
 
-# strip html
-
-from HTMLParser import HTMLParser
+from core.web import google_search  # interacting with Google Search
 
 
 class MLStripper(HTMLParser):

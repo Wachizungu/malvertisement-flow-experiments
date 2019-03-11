@@ -184,6 +184,8 @@ def crossVal_algo(k, algo, params, x, y, splittype, splitfrac, verbose=False):  
     rs2.get_n_splits(x)
     maximum, max_params = 0, {}
     par = []
+    par_mapping = {}
+    par_index = 0
     for param in params.keys():
         par.append(params[param])
     for p in product(*par):
@@ -198,28 +200,28 @@ def crossVal_algo(k, algo, params, x, y, splittype, splitfrac, verbose=False):  
             y_test = np.array([item for sublist in y_test for item in sublist])
             # print X_train.shape, y_train.shape, X_test.shape, y_test.shape
             if algo == 'svc':
-                clf = LinearSVC(C=p[params.keys().index('C')],
+                clf = LinearSVC(C=p[list(params.keys()).index('C')],
                                 penalty="l1", dual=False)  ## Larger C increases model complexity
             if algo == 'kNN':
-                clf = KNeighborsClassifier(n_neighbors=p[params.keys().index('k')],
-                                           warn_on_equidistant=False, p=p[params.keys().index('p')])
+                clf = KNeighborsClassifier(n_neighbors=p[list(params.keys()).index('k')],
+                                           warn_on_equidistant=False, p=p[list(params.keys()).index('p')])
             if algo == 'linearSVM':
-                clf = svm.SVC(kernel='linear', C=p[params.keys().index('C')])
+                clf = svm.SVC(kernel='linear', C=p[list(params.keys()).index('C')])
             if algo == 'polySVM':
-                clf = svm.SVC(kernel='poly', degree=p[params.keys().index('degree')],
-                              C=p[params.keys().index('C')])
+                clf = svm.SVC(kernel='poly', degree=p[list(params.keys()).index('degree')],
+                              C=p[list(params.keys()).index('C')])
             if algo == 'rbfSVM':
-                clf = svm.SVC(kernel='rbf', gamma=p[params.keys().index('gamma')],
-                              C=p[params.keys().index(
+                clf = svm.SVC(kernel='rbf', gamma=p[list(params.keys()).index('gamma')],
+                              C=p[list(params.keys()).index(
                                   'C')])  ## a smaller gamma gives a decision boundary with a smoother curvature
             if algo == 'logit':
-                clf = LogisticRegression(penalty=p[params.keys().index('penalty')], dual=False,
-                                         C=p[params.keys().index('C')])
+                clf = LogisticRegression(penalty=p[list(params.keys()).index('penalty')], dual=False,
+                                         C=p[list(params.keys()).index('C')])
             if algo == 'tree':
-                clf = ExtraTreesClassifier(n_estimators=p[params.keys().index('ne')], compute_importances=True,
+                clf = ExtraTreesClassifier(n_estimators=p[list(params.keys()).index('ne')], compute_importances=True,
                                            random_state=0)
             if algo == 'randlog':
-                clf = RandomizedLogisticRegression(C=p[params.keys().index('C')])
+                clf = RandomizedLogisticRegression(C=p[list(params.keys()).index('C')])
             clf.fit(x_train, y_train)
             score += clf.score(x_test, y_test)
         score /= k

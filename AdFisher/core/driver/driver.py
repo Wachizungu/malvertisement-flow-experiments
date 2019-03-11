@@ -26,7 +26,8 @@ def get_random_table(num_agents, ntreat):
         print("Warning: agents in each round [{}] not divisible by number of treatments [{}]".format(num_agents, ntreat))
         print("Assignment done randomly")
         input("Press enter to continue")
-    size = num_agents / ntreat
+    size = int(num_agents / ntreat)
+    print(size)
     table = [ntreat] * num_agents
     for i in range(0, ntreat):
         for j in range(size * i, size * (i + 1)):
@@ -65,7 +66,9 @@ def run_experiment(exper_body,
         fo.close()
 
         procs = []
+        print(num_agents)
         for agent_id in range(0, num_agents):
+            print('ha')
             procs.append(Process(target=drive_unit,
                                  args=(exper_body,
                                        block_id + 1, agent_id, table[agent_id], timeout,

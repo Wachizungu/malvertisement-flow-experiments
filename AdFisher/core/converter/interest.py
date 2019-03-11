@@ -1,5 +1,4 @@
 import re  # regular expressions
-import common
 
 
 class Interests:

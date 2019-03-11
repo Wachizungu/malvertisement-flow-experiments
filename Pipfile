@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+selenium = ">=3.141.0"
+xvfbwrapper = ">=0.2.9"
+psutil = ">=5.6.0"
+numpy = ">=1.8.2"
+scipy = ">=0.13.3"
+matplotlib = ">=3.0.3"
+scikit-learn = ">=0.20.3"
+stemming = ">=1.0.1"
+pyyaml = ">=3.13"
+nltk = ">=3.4"
+adblockparser = ">=0.7"
+
+[requires]
+python_version = "3.7"

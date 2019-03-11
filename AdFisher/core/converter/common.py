@@ -1,6 +1,6 @@
 from stemming.porter2 import stem  # Porter Snowball Stemming
 import math
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 import sys
 
 

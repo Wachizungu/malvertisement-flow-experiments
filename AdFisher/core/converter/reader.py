@@ -187,7 +187,7 @@ def get_keyword_vectors(advdicts, keywords):
 
 
 def apply_labels_to_vecs(adv, ints, newsv, ass, samples, treatments):  # check
-    size = samples / treatments
+    size = int(samples / treatments)
     for i in range(0, treatments):
         for j in range(0, size):
             adv[int(ass[i * size + j])].setLabel(i)
@@ -200,6 +200,7 @@ def interpret_log_line(line):
         For lines containing meta-data, the unit_id and treatment_id is -1
     """
     chunks = re.split(r'\|\|', line)
+    print(chunks)
     tim = chunks[0]
     linetype = chunks[1]
     linename = chunks[2]
@@ -226,7 +227,6 @@ def read_log(log_file):
                 num_agents = int(value)
             elif linename == 'treatnames':
                 treatnames = re.split(r'@\|', value)
-            #               print "Treatments: ", treatnames
             elif linename == 'block_id start':
                 sys.stdout.write(".")
                 sys.stdout.flush()

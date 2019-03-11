@@ -1,10 +1,9 @@
 import unittest
-import web.pre_experiment.alexa as alexa
 import driver.driver as driver
 import analysis.permutation_test
 import analysis.statistics
 import analysis.ml
-import sys, os
+import sys
 
 
 def do_experiment(make_unit, treatments, measurement, end_unit,
@@ -106,4 +105,4 @@ def do_experiment(make_unit, treatments, measurement, end_unit,
             # use test_stat to get the keyword analysis
             print("Running permutation test\n")
             p_value = analysis.permutation_test.blocked_sampled_test(observed_values, unit_assignments, test_stat)
-        print "p-value: ", p_value
+        print("p-value: ", p_value)

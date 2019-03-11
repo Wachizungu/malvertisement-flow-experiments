@@ -1,6 +1,8 @@
-import time, re  # time.sleep, re.split
+import time
+import re  # time.sleep, re.split
 import sys  # some prints
-import os, platform  # for running  os, platform specific function calls
+import os
+import platform  # for running  os, platform specific function calls
 from selenium import webdriver  # for running the driver on websites
 from datetime import datetime  # for tagging log with datetime
 

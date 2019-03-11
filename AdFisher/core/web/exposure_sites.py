@@ -1,18 +1,13 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
+import time
 from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
-from selenium.webdriver.common.action_chains import ActionChains  # to move mouse over
-# import browser_unit
 import google_ads
+from html.parser import HTMLParser
+
 
 # Google ad settings page class declarations
 
 
 # strip html
-
-from HTMLParser import HTMLParser
 
 
 class MLStripper(HTMLParser):

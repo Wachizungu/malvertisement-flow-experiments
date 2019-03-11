@@ -1,9 +1,9 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
-from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
+import time
+import sys
+from datetime import datetime
+from selenium.webdriver.common.keys import Keys
 import browser_unit
+from html.parser import HTMLParser
 
 # Google search page class declarations
 
@@ -13,9 +13,8 @@ LI_CLASS = "g"
 
 SIGNIN_A = "gb_70"
 
-# strip html
 
-from HTMLParser import HTMLParser
+# strip html
 
 
 class MLStripper(HTMLParser):
@@ -62,7 +61,8 @@ class GoogleSearchUnit(browser_unit.BrowserUnit):
             while page <= pages:
                 tim = str(datetime.now())
                 results = self.driver.find_elements_by_css_selector("div.g div.rc")
-                print len(results)
+                print
+                len(results)
                 for result in results:
                     t = result.find_element_by_css_selector("h3 a").get_attribute('innerHTML')
                     l = result.find_element_by_css_selector("div.s div div cite").get_attribute('innerHTML')

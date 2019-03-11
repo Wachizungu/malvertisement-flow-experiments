@@ -1,4 +1,6 @@
-import re, sys, math
+import re
+import sys
+import math
 import common
 
 # CHOICES FOR THE AD-COMPARISON, AD-IDENTIFICATION

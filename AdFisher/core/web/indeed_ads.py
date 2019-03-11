@@ -1,12 +1,7 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
-from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
+import time
+from datetime import datetime
 import browser_unit
-from selenium.common.exceptions import NoSuchElementException
-# strip html
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 
 import string
 import random

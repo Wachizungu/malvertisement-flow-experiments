@@ -309,7 +309,7 @@ def print_by_site_reload(ad_lines):
 def print_by_session(data, printer):
     for session in data:
         unit_id, treatment_id, ad_lines = data[session]
-        print "-" * 80
+        print("-" * 80)
         print("Session/Treatment/Unit: {}/{}/{} : \n".format(session, treatment_id, unit_id))
         printer(ad_lines)
 
@@ -318,7 +318,7 @@ def simple_print(data):
     print("{} Sessions".format(len(data)))
     for session in data:
         unit_id, treatment_id, ad_lines = data[session]
-        print "-" * 80
+        print("-" * 80)
         print("\nSession/Treatment/Unit: {}/{}/{} : ".format(session, treatment_id, unit_id))
         print("# adlines: {}".format(len(ad_lines)))
         cnt = 0

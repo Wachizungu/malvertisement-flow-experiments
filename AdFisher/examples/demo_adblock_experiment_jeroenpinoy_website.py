@@ -3,7 +3,6 @@ import web.pre_experiment.alexa  # collecting top sites from alexa
 import web.adblock_ads  # collecting ads
 
 log_file = 'adblock.log.txt'
-
 # Use a bare AdBlockUnit to fetch the filterlist and load the rules. All instances
 # will then share these rules
 adblock_rules = web.adblock_ads.AdBlockUnit(log_file=log_file).rules
@@ -52,9 +51,14 @@ def test_stat(observed_values, unit_assignments):
     pass
 
 
-adfisher.do_experiment(make_unit=make_browser, treatments=[control_treatment, exp_treatment],
-                       measurement=measurement, end_unit=cleanup_browser,
-                       load_results=load_results, test_stat=test_stat, ml_analysis=False,
-                       num_blocks=1, num_units=4, timeout=3000,
-                       log_file=log_file, exp_flag=True, analysis_flag=False,
-                       treatment_names=["control", "experimental"])
+def main():
+    adfisher.do_experiment(make_unit=make_browser, treatments=[control_treatment, exp_treatment],
+                           measurement=measurement, end_unit=cleanup_browser,
+                           load_results=load_results, test_stat=test_stat, ml_analysis=False,
+                           num_blocks=1, num_units=4, timeout=3000,
+                           log_file=log_file, exp_flag=True, analysis_flag=False,
+                           treatment_names=["control", "experimental"])
+
+
+if __name__ == "__main__":
+    main()

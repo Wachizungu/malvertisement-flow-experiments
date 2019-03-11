@@ -20,8 +20,11 @@ LOG_NUM = 2
 
 class Ad:
 
-    def __init__(self, value, treatment_id, separator='@|'):
+    def __init__(self, value, treatment_id, separator=r'@\|'):
+        print(separator)
+        print(value)
         chunks = re.split(separator, value)
+        print(chunks)
         self.time = datetime.strptime(chunks[0], "%Y-%m-%d %H:%M:%S.%f")
         self.title = chunks[1]
         self.url = chunks[2]
@@ -60,7 +63,7 @@ class Ad:
         #       print " & ", " & $", int(c[4]), "$ & $", int(c[5]), "$ & $", int(C[4]), "$ & $", int(C[5]), "$ \\\\"
         #       print "\hline \\\\"
 
-        print(self.title, " & \url{", self.url, "} & $", round(coeff, 3), "$ & $",)
+        print(self.title, " & \\url{", self.url, "} & $", round(coeff, 3), "$ & $",)
         print(int(c[4]), "$ & $", int(c[5]), "$ & & $", int(C[4]), "$ & $", int(C[5]), "$ \\\\")
 
     def display(self):

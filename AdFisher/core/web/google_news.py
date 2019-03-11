@@ -1,7 +1,7 @@
 import time
 import sys
 from datetime import datetime
-import google_ads
+from core.web import google_ads
 from html.parser import HTMLParser
 
 

@@ -1,7 +1,7 @@
 import re
 import sys
 import math
-import common
+from core.converter import common
 
 # CHOICES FOR THE AD-COMPARISON, AD-IDENTIFICATION
 

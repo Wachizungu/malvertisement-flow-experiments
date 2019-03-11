@@ -6,7 +6,7 @@ import time
 import contextlib
 
 # base class we inherit from and extend
-import browser_unit
+from core.web import browser_unit
 
 # imports to use selenium
 import selenium
@@ -116,6 +116,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
 
     def save_data(self):
         json_file = os.path.splitext(self.log_file)[0] + "." + self.session + ".json"
+        print(self.data)
         with open(json_file, 'w') as outfile:
             json.dump(self.data, outfile)
 
@@ -129,7 +130,7 @@ class AdBlockUnit(browser_unit.BrowserUnit):
         '''
 
         url = element.get_attribute(source)
-        html = element.get_attribute('outerHTML').encode('utf-8')
+        html = element.get_attribute('outerHTML')
         tag = element.tag_name
         link_text = element.text
         link_location = element.location

@@ -1,9 +1,8 @@
 import time
-import sys  # some prints
-from datetime import datetime  # for tagging log with datetime
+import sys
+from datetime import datetime
 from html.parser import HTMLParser
-
-from core.web import google_search  # interacting with Google Search
+from core.web import google_search
 
 
 class MLStripper(HTMLParser):

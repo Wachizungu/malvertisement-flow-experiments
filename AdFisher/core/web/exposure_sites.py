@@ -1,6 +1,6 @@
 import time
 from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
-import google_ads
+from core.web import google_ads
 from html.parser import HTMLParser
 
 

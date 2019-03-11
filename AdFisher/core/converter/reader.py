@@ -1,8 +1,13 @@
-import re, sys
+import re
+import sys
 import numpy as np
-from datetime import datetime, timedelta  # to read timestamps reloadtimes
-import adVector, ad, common, interest, news  # common, ad ad_vector, interest, news classes
-from nltk.corpus import stopwords  # for removing stop-words
+from datetime import datetime, timedelta
+import adVector
+from core.converter import ad
+from core.converter import common
+from core.converter import interest
+from core.converter import news
+from nltk.corpus import stopwords
 
 
 def word_vectors(ad_list):  # returns a frequency vector of words, when input a list of adVecs

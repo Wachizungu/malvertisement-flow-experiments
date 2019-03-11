@@ -1,7 +1,7 @@
 import time
 import sys
 from datetime import datetime
-import browser_unit
+from core.web import browser_unit
 from selenium.common.exceptions import NoSuchElementException
 import random
 from html.parser import HTMLParser

@@ -180,8 +180,9 @@ def group_matrix(data):
 
     group_id = 0
     for link_text in ads_by_link:
-        # charachteristics
-        texts = set([link_text.replace(',', '_')])
+        print('haha' + str(link_text))
+        # characteristics
+        texts = set([str(link_text).replace(',', '_')])
         urls = set()
         # (session, reload)
         observations = set()
@@ -192,7 +193,7 @@ def group_matrix(data):
             rel = a.reloads
             on = a.on_site
             observations.add((session, rel, on))
-            urls.add(a.url.replace(',', '_'))
+            urls.add(str(a.url).replace(',', '_'))
 
         # join with other instances with the same url
         for url in urls:
@@ -203,11 +204,10 @@ def group_matrix(data):
                 on = a.on_site
                 observations.add((session, rel, on))
 
-                texts.add(a.link_text.replace(',', '_'))
+                texts.add(str(a.link_text).replace(',', '_'))
 
         characteristics = [texts, urls]
         groups[group_id] = [characteristics, observations]
-
         group_id += 1
 
     print("There are {} ads with link_text".format(len(groups)))
@@ -224,7 +224,7 @@ def group_matrix(data):
             rel = a.reloads
             on = a.on_site
             observations.add((session, rel, on))
-            urls.add(a.url.replace(',', '_'))
+            urls.add(str(a.url).replace(',', '_'))
 
         characteristics = [set(), urls]
         groups[group_id] = [characteristics, observations]
@@ -246,7 +246,7 @@ def save_matrix_csv(data, groups, outfile):
             obs_data = group_observed(obs, cols)
             # skip non link text
             link, urls = character
-            csv_line = [g_id, list(link), list(urls), len(link), len(urls), sum(obs_data)] + obs_data
+            csv_line = [g_id, list(link), list(urls), len(link), len(urls), sum(obs_data)] + list(obs_data)
             writer.writerow(csv_line)
 
 

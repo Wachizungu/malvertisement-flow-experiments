@@ -1,12 +1,11 @@
 import time
-import re  # time.sleep, re.split
-import sys  # some prints
+import re
+import sys
 import os
-import platform  # for running  os, platform specific function calls
-from selenium import webdriver  # for running the driver on websites
-from datetime import datetime  # for tagging log with datetime
+import platform
+from selenium import webdriver
+from datetime import datetime
 
-# from xvfbwrapper import Xvfb                # for creating artificial display to run experiments                
 from selenium.webdriver.common.proxy import *  # for proxy settings
 
 

@@ -1,9 +1,9 @@
-import time, re  # time.sleep, re.split
-import sys  # some prints
-from datetime import datetime  # for tagging log with datetime
+import time
+import sys
+from datetime import datetime
 from selenium.webdriver.common.by import By
-import bing_search
-from HTMLParser import HTMLParser
+from core.web import bing_search
+from html.parser import HTMLParser
 
 
 class MLStripper(HTMLParser):

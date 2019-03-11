@@ -1,6 +1,6 @@
 import time
-from selenium.webdriver.common.keys import Keys  # to press keys on a webpage
-import browser_unit
+from selenium.webdriver.common.keys import Keys
+from core.web import browser_unit
 from html.parser import HTMLParser
 
 # Bing search constants

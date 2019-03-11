@@ -2,7 +2,7 @@ import time
 import sys
 from datetime import datetime
 from selenium.webdriver.common.keys import Keys
-import browser_unit
+from core.web import browser_unit
 from html.parser import HTMLParser
 
 # Google search page class declarations

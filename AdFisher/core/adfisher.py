@@ -1,8 +1,8 @@
 import unittest
-import driver.driver as driver
+import core.driver.driver as driver
 import analysis.permutation_test
-import analysis.statistics
-import analysis.ml
+import core.analysis.statistics
+import core.analysis.ml
 import sys
 
 
@@ -62,6 +62,7 @@ def do_experiment(make_unit, treatments, measurement, end_unit,
                 end_unit(self.unit)
 
         test = Test()
+        suite = unittest.TestSuite()
         suite = unittest.TestSuite()
         suite.addTest(test)
         unittest.TextTestRunner(verbosity=1).run(suite)

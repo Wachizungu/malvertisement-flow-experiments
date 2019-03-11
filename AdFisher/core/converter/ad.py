@@ -1,6 +1,6 @@
 import re  # regular expressions
 from stemming.porter2 import stem  # for Porter Stemming
-import common
+from core.converter import common
 from datetime import datetime, timedelta  # to read timestamps reloadtimes
 import math
 

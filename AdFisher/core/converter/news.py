@@ -1,6 +1,6 @@
 import re
 import sys  # regular expressions
-import common
+from core.converter import common
 from datetime import datetime, timedelta  # to read timestamps reloadtimes
 import math
 

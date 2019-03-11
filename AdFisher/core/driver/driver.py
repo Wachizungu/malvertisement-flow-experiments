@@ -1,9 +1,11 @@
-import sys, os, psutil
+import sys
+import os
+import psutil
 from multiprocessing import Process
-from datetime import datetime  # for getting times for logging
+from datetime import datetime
 import numpy as np
 import random
-import signal  # for timing out external calls
+import signal
 
 
 def treatments_to_string(treatment_names):
@@ -23,11 +25,11 @@ def get_random_table(num_agents, ntreat):
     l = np.arange(num_agents)
     random.shuffle(l)
     if num_agents % ntreat != 0:
-        print("Warning: agents in each round [{}] not divisible by number of treatments [{}]".format(num_agents, ntreat))
+        print(
+            "Warning: agents in each round [{}] not divisible by number of treatments [{}]".format(num_agents, ntreat))
         print("Assignment done randomly")
         input("Press enter to continue")
     size = int(num_agents / ntreat)
-    print(size)
     table = [ntreat] * num_agents
     for i in range(0, ntreat):
         for j in range(size * i, size * (i + 1)):
@@ -66,15 +68,17 @@ def run_experiment(exper_body,
         fo.close()
 
         procs = []
-        print(num_agents)
         for agent_id in range(0, num_agents):
-            print('ha')
             procs.append(Process(target=drive_unit,
                                  args=(exper_body,
                                        block_id + 1, agent_id, table[agent_id], timeout,
                                        log_file, treatment_names,)))
-        map(lambda x: x.start(), procs)
-        map(lambda x: x.join(timeout + 5), procs)
+        for proc in procs:
+            proc.start()
+        for proc in procs:
+            proc.join(timeout + 5)
+        # procs = list(map(lambda x: x.start(), procs))
+        # procs = list(map(lambda x: x.join(timeout + 5), procs))
         for proc in procs:
             if proc.is_alive():
                 kill_proc_tree(proc.pid)

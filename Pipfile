@@ -4,6 +4,8 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pylint = "*"
+graphviz = "*"
 
 [packages]
 selenium = ">=3.141.0"
@@ -17,6 +19,7 @@ stemming = ">=1.0.1"
 pyyaml = ">=3.13"
 nltk = ">=3.4"
 adblockparser = ">=0.7"
+pymisp = "*"
 
 [requires]
 python_version = "3.7"

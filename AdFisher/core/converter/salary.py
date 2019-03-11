@@ -1,5 +1,5 @@
-import re  # regular expressions
-from datetime import datetime, timedelta  # to read timestamps reloadtimes
+import re
+from datetime import datetime
 
 
 class Salary:
